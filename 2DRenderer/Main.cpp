@@ -29,8 +29,14 @@ int main(int, char**)
 		framebuffer->Clear({ 0, 0, 0, 0 });
 
 		framebuffer->DrawRect(rand() % framebuffer->width - 100, rand() % framebuffer->height - 100, 
-			rand() % framebuffer->width, rand() % framebuffer->height, {255, 255, 255, 255});
+			rand() % framebuffer->width, rand() % framebuffer->height, {0, 255, 0, 255});
 		
+		for (int i = 0; i < 50; ++i)
+		{
+			framebuffer->DrawLine(framebuffer->width >> 1, framebuffer->height >> 1, 
+				rand() % framebuffer->width, rand() % framebuffer->height, { 0, 0, 255, 255 });
+		}
+
 		framebuffer->Update();
 
 		renderer->CopyBuffer(framebuffer.get());
