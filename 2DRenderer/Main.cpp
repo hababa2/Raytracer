@@ -1,5 +1,6 @@
 #include "Renderer.h"
 #include "Framebuffer.h"
+#include "Image.h"
 
 #include <iostream>
 #include <SDL.h>
@@ -13,6 +14,10 @@ int main(int, char**)
 	renderer->Initialize(WIDTH, HEIGHT);
 
 	std::unique_ptr<Framebuffer> framebuffer = std::make_unique<Framebuffer>(renderer.get(), renderer->width, renderer->height);
+
+	std::unique_ptr<Image> image = std::make_unique<Image>();
+	image->Load("../resources/sus.bmp");
+	image->Flip();
 	
 	bool quit = false;
 	SDL_Event event;
@@ -27,18 +32,16 @@ int main(int, char**)
 		}
 
 		framebuffer->Clear({ 0, 0, 0, 0 });
+		
+		framebuffer->DrawRect(300, 500, 200, 50, { 255, 255, 255, 255 });
+		framebuffer->DrawLine(100, 200, 300, 50, { 255, 255, 255, 255 });
+		framebuffer->DrawTriangle(650, 550, 700, 500, 750, 550, { 255, 255, 255, 255 });
+		framebuffer->DrawSimpleCurve(200, 500, 100, 450, 2, {255, 255, 255, 255});
+		framebuffer->DrawQuadCurve(200, 200, 300, 100, 400, 200, 100, { 255, 255, 255, 255 });
+		framebuffer->DrawCubeCurve(400, 400, 500, 300, 500, 450, 600, 300, 30, {255, 255, 255, 255});
+		framebuffer->DrawCircle(500, 300, 50, { 255, 255, 255, 255 });
 
-		//framebuffer->DrawRect(rand() % framebuffer->width - 100, rand() % framebuffer->height - 100, 
-		//	rand() % framebuffer->width, rand() % framebuffer->height, {0, 255, 0, 255});
-		//
-		//for (int i = 0; i < 50; ++i)
-		//{
-		//	framebuffer->DrawLine(framebuffer->width >> 1, framebuffer->height >> 1, 
-		//		rand() % framebuffer->width, rand() % framebuffer->height, { 0, 0, 255, 255 });
-		//}
-
-		framebuffer->DrawSimpleCurve(200, 200, 300, 100, 2, {255, 255, 255, 255});
-		framebuffer->DrawQuadCurve(200, 200, 300, 100, 400, 200, 50, {255, 255, 255, 255});
+		framebuffer->DrawImage(450, 10, image.get());
 
 		framebuffer->Update();
 
