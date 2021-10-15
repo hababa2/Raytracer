@@ -19,7 +19,7 @@ bool Image::Load(const std::string& filename, uint8_t alpha)
     stream.read((char*)header, 54);
 
     uint16_t id = *((uint16_t*)(header));
-    if (id == 'MB')
+    if (id == 'BM')
     {
         std::cout << "Error: This File Is Not A BMP!";
         return false;
@@ -55,6 +55,7 @@ bool Image::Load(const std::string& filename, uint8_t alpha)
     }
 
     delete[] data;
+    stream.close();
 
     return true;
 }
