@@ -72,5 +72,6 @@ void Image::Flip()
         memcpy(line1, line2, colorBuffer.pitch);
         memcpy(line2, temp, colorBuffer.pitch);
     }
+
     delete[] temp;
 }
