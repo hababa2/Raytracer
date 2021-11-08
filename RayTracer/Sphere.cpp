@@ -23,6 +23,8 @@ bool Sphere::Hit(const Ray& r, float tMin, float tMax, RaycastHit& hit)
             hit.point = r.pointAt(hit.t);
             hit.material = material.get();
             hit.normal = (hit.point - center) / radius;
+            hit.uv = GetSphericalUV(hit.normal);
+
             return true;
         }
 
